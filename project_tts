@@ -1,0 +1,77 @@
+import pyttsx3
+
+# Initialize speech engine
+engine = pyttsx3.init()
+
+print("\n===== SMART TEXT TO SPEECH CONVERTER =====\n")
+
+while True:
+
+    print("\n1. Convert Text to Speech")
+    print("2. Change Speech Speed")
+    print("3. Exit")
+
+    choice = input("\nEnter your choice: ")
+
+    # ---------- TEXT TO SPEECH ----------
+    if choice == "1":
+
+        voices = engine.getProperty('voices')
+
+        print("\nChoose Voice:")
+        print("1. Male Voice")
+        print("2. Female Voice")
+
+        voice_choice = input("Enter choice: ")
+
+        try:
+            if voice_choice == "1":
+                engine.setProperty('voice', voices[0].id)
+
+            elif voice_choice == "2":
+                if len(voices) > 1:
+                    engine.setProperty('voice', voices[1].id)
+                else:
+                    print("Female voice not available. Using default voice.")
+
+            else:
+                print("Invalid choice! Using default voice.")
+
+        except:
+            print("Voice selection error. Using default voice.")
+
+        text = input("\nEnter text to convert into speech:\n")
+
+        if text.strip() == "":
+            print("Text cannot be empty!")
+
+        else:
+            print("\nConverting text to speech...\n")
+
+            engine.say(text)
+            engine.runAndWait()
+
+            print("Conversion completed successfully!")
+
+    # ---------- SPEED CONTROL ----------
+    elif choice == "2":
+
+        try:
+            speed = int(input("Enter speech speed (100-200 recommended): "))
+
+            engine.setProperty('rate', speed)
+
+            print("Speech speed updated successfully!")
+
+        except:
+            print("Please enter a valid number!")
+
+    # ---------- EXIT ----------
+    elif choice == "3":
+
+        print("\nThank you for using Smart Text to Speech Converter!")
+        break
+
+    # ---------- INVALID ----------
+    else:
+        print("\nInvalid Choice! Please try again.")
